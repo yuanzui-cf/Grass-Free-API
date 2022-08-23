@@ -3,6 +3,7 @@
 Grass Free API [ver 2.0.0-alpha]
 Author: Grass Development Team
 Website: https://mystu.net/
+Github: https://github.com/yuanzui-cf/Grass-Free-API/
 */
 const os = require("os"),
       fs = require("fs-extra"),
