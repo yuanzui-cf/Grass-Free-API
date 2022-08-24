@@ -1,6 +1,6 @@
 {
   "name": "gfapi",
-  "version": "2.0.0-alpha2",
+  "version": "2.0.0-alpha3",
   "description": "A Free API Frame",
   "main": "main.js",
   "scripts": {
@@ -14,6 +14,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "express-ip": "^1.0.4",
     "fs-extra": "^10.1.0"
   }
 }

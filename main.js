@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
-Grass Free API [ver 2.0.0-alpha2]
+Grass Free API [ver 2.0.0-alpha3]
 Author: Grass Development Team
 Website: https://mystu.net/
 Github: https://github.com/yuanzui-cf/Grass-Free-API/
@@ -12,8 +12,9 @@ const os = require("os"),
       http = require("http"),
       https = require("https"),
       func = require("./functions"),
+      express_ip = require("express-ip"),
       server = express();
-console.log("Grass Free API [v2.0.0-alpha2]");
+console.log("Grass Free API [v2.0.0-alpha3]");
 console.log("Copyright (c) 2022 Grass Development Team.");
 let port = 9000;
 let include = [];
@@ -52,6 +53,7 @@ if(!fs.existsSync("./app")){
     func.log.success(`Successfully create the app dir.`);
 }
 server.use(cors());
+server.use(express_ip().getIpInfoMiddleware)
 let app = [];
 module.exports = {
     server: server,
@@ -61,7 +63,10 @@ module.exports = {
     log: func.log,
     maindir: __dirname,
     http: http,
-    https: https
+    https: https,
+    show: req => {
+        func.log.log(`Someone visit the API. Path: ${req.path}. IP: ${req.ipInfo.ip}`);
+    }
 };
 for(let i = 0; i < include.length; i++){
     const app_tmp = {
@@ -102,19 +107,20 @@ if(
     server.get("*", (req, res) => {
         res.send({
             name: "Grass Free API",
-            version: "v2.0.0-alpha",
+            version: "v2.0.0-alpha3",
             plugin: app
         });
     });
 }
 else{
-    server.get("/about", (req, res) => {
+    server.get("/api/*", (req, res) => {
         res.send({
             name: "Grass Free API",
-            version: "v2.0.0-alpha",
+            version: "v2.0.0-alpha3",
             plugin: app
         });
     });
+    server.get("*", (req, res) => res.sendStatus(404));
 }
 server.listen(port, () => {
     func.log.success(`Grass Free API was listened on :${port}`);
